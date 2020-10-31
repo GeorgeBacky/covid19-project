@@ -1,0 +1,20 @@
+body {
+  background-color: #212529;
+  font-size: 18px;
+}
+
+.covid-box {
+  padding: 2rem 1rem;
+  margin: 0.5rem;
+  border-radius: 10px;
+  width: calc(50% - 1rem);
+  max-width: 250px;
+}
+
+@media screen and (min-width: 992px) {
+  .covid-box {
+    margin: 1rem;
+    width: calc(33.333% - 2rem);
+    max-width: unset;
+  }
+}

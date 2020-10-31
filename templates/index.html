@@ -1,64 +1,79 @@
+{% load static %}
+{% load humanize %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>COVID-19 Tracker</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="shortcut icon" href="{% static 'favicons/favicon.ico' %}">
+	<link rel="icon" sizes="16x16 32x32 64x64" href="{% static 'favicons/favicon.ico' %}">
+	<link rel="icon" type="image/png" sizes="196x196" href="{% static 'favicons/favicon-192.png' %}">
+	<link rel="icon" type="image/png" sizes="160x160" href="{% static 'favicons/favicon-160.png' %}">
+	<link rel="icon" type="image/png" sizes="96x96" href="{% static 'favicons/favicon-96.png' %}">
+	<link rel="icon" type="image/png" sizes="64x64" href="{% static 'favicons/favicon-64.png' %}">
+	<link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicons/favicon-32.png' %}">
+	<link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicons/favicon-16.png' %}">
+	<link rel="apple-touch-icon" href="{% static 'favicons/favicon-57.png' %}">
+	<link rel="apple-touch-icon" sizes="114x114" href="{% static 'favicons/favicon-114.png' %}">
+	<link rel="apple-touch-icon" sizes="72x72" href="{% static 'favicons/favicon-72.png' %}">
+	<link rel="apple-touch-icon" sizes="144x144" href="{% static 'favicons/favicon-144.png' %}">
+	<link rel="apple-touch-icon" sizes="60x60" href="{% static 'favicons/favicon-60.png' %}">
+	<link rel="apple-touch-icon" sizes="120x120" href="{% static 'favicons/favicon-120.png' %}">
+	<link rel="apple-touch-icon" sizes="76x76" href="{% static 'favicons/favicon-76.png' %}">
+	<link rel="apple-touch-icon" sizes="152x152" href="{% static 'favicons/favicon-152.png' %}">
+	<link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicons/favicon-180.png' %}">
+	<meta name="msapplication-TileColor" content="#FFFFFF">
+	<meta name="msapplication-TileImage" content="{% static 'favicons/favicon-144.png' %}">
+	<meta name="msapplication-config" content="{% static 'favicons/browserconfig.xml' %}">
 </head>
-<style type="text/css">
-    .container {
-        margin-top: 10px;
-        margin-bottom: 10px;
-    }
-    
-    
-</style>
-<body style="background-color: black;">
-    <h1 style="color: white;text-align: center;"><span style="color: red;">COVID-19 </span>WORLDWIDE DATA</h1>
+
+<body>
+    <h1 class="text-center text-white"><span style="color: red;">COVID-19 </span>WORLDWIDE DATA</h1>
 
     <form method="post" style="margin-top:50px;" class="d-flex justify-content-center align-items-center" action="">
         {% csrf_token %}
-        <select class="form-control" style="width: 200px;" name="selectedcountry">
+        <select class="form-control mr-2" style="width: 200px;" name="selectedcountry">
             {% for country in mylist %}
-            <option>
+            <option {% if country == selectedcountry %} selected {% endif %}>
                 {{country}}
             </option>
             {% endfor %}
         </select>
         <input type='submit' class="btn btn-danger" name="">
     </form>
-    <h1 style="margin-top:150px;color: white;text-align: center;">{{selectedcountry}}</h1>
+    <h1 class="text-center text-white" style="margin-top:150px">{{selectedcountry}}</h1>
 
-    <div class="d-flex justify-content-center align-items-center">
-        <div class="container" style="border-radius: 10px;background-color:#F0AD4E;height: 100px;width: 200px;">
-            <h1 style="text-align: center;">{{total}}</h1>
-            <p style="text-align: center;">Total Cases</p>
-        </div>
-        <div class="container" style="border-radius: 10px;background-color:#28A745;height: 100px;width: 200px;">
-            <h1 style="text-align: center;">{{recovered}}</h1>
-            <p style="text-align: center;">Recovered</p>
-        </div>
-        <div class="container" style="border-radius: 10px;background-color:#FFC107;height: 100px;width: 200px;">
-            <h1 style="text-align: center;">{{active}}</h1>
-            <p style="text-align: center;">Active Cases</p>
+    <div class="container">
+        <div class="covid-boxes d-flex justify-content-center align-items-center flex-wrap text-center">
+            <div class="covid-box" style="background-color:#F0AD4E;">
+                <h2>{{total|intcomma}}</h2>
+                <p class="font-weight-bold">Total Cases</p>
+            </div>
+            <div class="covid-box" style="background-color:#28A745;">
+                <h2>{{recovered|intcomma}}</h2>
+                <p class="font-weight-bold">Recovered</p>
+            </div>
+            <div class="covid-box" style="background-color:#FFC107;">
+                <h2>{{active|intcomma}}</h2>
+                <p class="font-weight-bold">Active Cases</p>
+            </div>
+            <div class="covid-box" style="background-color:#17A2B8;">
+                <h2>{{new.0}}{{new|intcomma}}</h2>
+                <p class="font-weight-bold">New Cases</p>
+            </div>
+            <div class="covid-box" style="background-color:#DADADA;">
+                <h2>{{deaths|intcomma}}</h2>
+                <p class="font-weight-bold">Deaths</p>
+            </div>
+            <div class="covid-box" style="background-color:#DC3545;">
+                <h2>{{critical|intcomma}}</h2>
+                <p class="font-weight-bold">Critical Cases</p>
+            </div>
         </div>
     </div>
-    <div class="d-flex justify-content-center align-items-center">
-        <div class="container" style="border-radius: 10px;background-color:#17A2B8;height: 100px;width: 200px;">
-            <h1 style="text-align: center;">{{new}}</h1>
-            <p style="text-align: center;">New Cases</p>
-        </div>
-        <div class="container" style="border-radius: 10px;background-color:#DADADA;height: 100px;width: 200px;">
-            <h1 style="text-align: center;">{{deaths}}</h1>
-            <p style="text-align: center;">Deaths</p>
-        </div>
-        <div class="container" style="border-radius: 10px;background-color:#DC3545;height: 100px;width: 200px;">
-            <h1 style="text-align: center;">{{critical}}</h1>
-            <p style="text-align: center;">Critical Cases</p>
-        </div>
-    </div>
-
     
     <p style="margin-top: 140px;text-align: center;color: grey;">Developed by <span style="color: white;">George Bakalis</span></p>
 </body>
